@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculator</title>
+    <style>
+      body {
+        background-color: black;
+        color: white;
+        font-size: larger;
+        font-weight: bold;
+        font-family: Arial;
+      }
+      .B {
+        flex: 1 1 calc(25% - 10px);
+        padding: 20px;
+        border: none;
+        border-radius: 60px;
+        background-color: #007bff;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        box-sizing: border-box;
+        margin-right: 15px;
+        margin-bottom: 20px;
+      }
+      .C {
+        flex: 1 1 calc(25% - 10px);
+        padding: 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #f49416;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        box-sizing: border-box;
+        margin-right: 1000px;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <p class="js-calcul"></p>
+
+    <button onclick="Culculwith(1);" class="B">1</button>
+    <button onclick="Culculwith(2);" class="B">2</button>
+    <button onclick="Culculwith(3);" class="B">3</button>
+    <button onclick="Culculwith('+');" class="C">+</button>
+    <button onclick="Culculwith(4);" class="B">4</button>
+    <button onclick="Culculwith(5);" class="B">5</button>
+    <button onclick="Culculwith(6);" class="B">6</button>
+    <button onclick="Culculwith('-');" class="C">-</button>
+    <button onclick="Culculwith(7);" class="B">7</button>
+    <button onclick="Culculwith(8);" class="B">8</button>
+    <button onclick="Culculwith(9);" class="B">9</button>
+    <button onclick="Culculwith('*');" class="C">*</button>
+    <button onclick="Culculwith(0);" class="B">0</button>
+    <button onclick="Culculwith('.');" class="B">.</button>
+    <button onclick="Culculwith('=');" class="B">=</button>
+    <button onclick="Culculwith('/');" class="C">/</button>
+    <button onclick="Culculwith('C');" class="B">C</button>
+
+    <script>
+      let Calculs = localStorage.getItem("Calculs");
+      if (Calculs === null || Calculs === undefined) {
+        Calculs = "";
+      }
+      ShowCalculus();
+      function Culculwith(a) {
+        if (a !== "=" && a !== "C") {
+          Calculs += a;
+          ShowCalculus();
+        } else if (a === "=") {
+        /*else if (a === '+') {Calculs+='+';ShowCalculus();}
+     else if (a === '*') {Calculs+='*';ShowCalculus();}
+     else if (a === '/') {Calculs+= '/';ShowCalculus();}*/
+          if (
+            Calculs.charAt(0) == "+" ||
+            Calculs.charAt(Calculs.length - 1) == "+" ||
+            Calculs.charAt(0) == "*" ||
+            Calculs.charAt(Calculs.length - 1) == "*" ||
+            Calculs.charAt(0) == "/" ||
+            Calculs.charAt(Calculs.length - 1) == "/" ||
+            Calculs.charAt(0) == "." ||
+            Calculs.charAt(Calculs.length - 1) == "/"
+          ) {
+            Calculs = "wrong";
+            ShowCalculus();
+            Calculs = "";
+          } else {
+            Calculs = eval(Calculs);
+            localStorage.setItem("Calculs", Calculs);
+            ShowCalculus();
+            Calculs = "";
+          }
+        } else if (a === "C") {
+          Calculs = "";
+          localStorage.removeItem("Calculs");
+          ShowCalculus();
+        }
+      }
+      function ShowCalculus() {
+        document.querySelector(".js-calcul").innerHTML = Calculs;
+      }
+    </script>
+  </body>
+</html>
